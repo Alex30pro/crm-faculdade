@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban - ConnectaCRM</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/kanban.css">
+    <link rel="stylesheet" href="css/moderno.css"> 
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <h3>ConnectaCRM</h3>
+            </div>
+            <nav class="main-nav">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="lixeira.html" class="nav-link">Lixeira</a>
+                <a href="kanban.html" class="nav-link active">Kanban</a>
+            </nav>
+            <div class="user-menu">
+                <button id="theme-toggle-btn" class="theme-toggle" title="Mudar tema">🌙</button>
+                <div class="user-profile-menu">
+                    <div class="avatar"><span id="user-initial"></span></div>
+                    <span id="user-name"></span>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="logout-btn">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container-kanban">
+            <div id="kanban-board" class="kanban-board">
+                </div>
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script type="module" src="js/kanban.js"></script>
+    
+</body>
+</html>

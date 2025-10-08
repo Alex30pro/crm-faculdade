@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF--8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ConnectaCRM</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/moderno.css"> 
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>ConnectaCRM</h1>
+            <p>Por favor, entre com suas credenciais.</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group password-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" required>
+                    <button type="button" class="password-toggle-btn" title="Mostrar/Ocultar senha">👁️</button>
+                </div>
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+            <div id="error-message" class="error-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script type="module" src="js/login.js"></script>
+</body>
+</html>

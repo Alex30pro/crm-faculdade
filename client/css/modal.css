@@ -1,0 +1,356 @@
+/* client/css/modal.css */
+
+.modal {
+    /* Estado inicial: escondido. O JS vai mudar para 'flex' para exibir. */
+    display: none; 
+
+    /* Posicionamento para cobrir a tela inteira */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    /* Z-index ALTO para garantir que fique na frente de TUDO */
+    z-index: 1000;
+
+    /* Fundo semi-transparente para o efeito de overlay */
+    background-color: rgba(0, 0, 0, 0.6);
+
+    /* Alinha o conteúdo do modal (a caixa branca/cinza) no centro */
+    display: flex; /* Mantenha flex para quando for exibido */
+    justify-content: center;
+    align-items: center;
+
+    /* Inicialmente escondido de forma suave */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Estilo para quando o modal está visível (o JS adiciona o display:flex) */
+.modal[style*="display: flex"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Estilo para a caixa de conteúdo do modal */
+.modal-content {
+    background-color: #2D3748; /* Cor de fundo para tema escuro */
+    padding: 24px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px; /* Largura máxima do modal */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #4A5568;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #A0AEC0;
+    cursor: pointer;
+}
+
+.modal-close-btn:hover {
+    color: var(--texto-principal);
+}
+
+/* --- ESTILOS PARA FORMULÁRIOS DENTRO DO MODAL --- */
+.modal-body .form-group {
+    margin-bottom: 15px;
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.modal-body input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: var(--fundo-principal);
+    border: 1px solid var(--cor-borda-input);
+    border-radius: 4px;
+    color: var(--texto-principal);
+    font-size: 1em;
+}
+
+.modal-body button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.modal-body .error-message {
+    color: #ff6b6b;
+    margin-top: 10px;
+    display: none; /* Escondido por padrão */
+}
+
+
+/* --- ESTILOS PARA A LISTA DE HISTÓRICO --- */
+.history-list {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 15px 5px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item p {
+    margin: 0 0 8px 0;
+}
+
+.history-item .meta {
+    font-size: 0.85em;
+    color: var(--texto-secundario);
+}
+
+/* Estilos para o conteúdo do modal de lembrete */
+.lembrete-options p {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.preset-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.preset-btn {
+    padding: 8px 12px;
+}
+
+.lembrete-divider {
+    border: none;
+    border-top: 1px solid var(--cor-borda);
+    margin: 20px 0;
+}
+
+.lembrete-input {
+    width: 100%;
+    padding: 10px;
+}
+
+#remover-lembrete-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    display: none; /* Começa escondido */
+}
+
+.modal-body textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    background-color: var(--fundo-principal);
+    border: 1px solid var(--cor-borda-input);
+    border-radius: 4px;
+    color: var(--texto-principal);
+    font-family: inherit;
+    resize: vertical;
+}
+
+/* Em client/css/modal.css */
+
+/* Estilo para modais maiores */
+.modal-content.modal-lg {
+    max-width: 800px;
+}
+
+.detalhes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.detalhes-coluna h3 {
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.detalhes-coluna p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.detalhes-coluna p strong {
+    margin-right: 10px;
+}
+
+/* Lógica de Edição: esconde os inputs por padrão */
+.edit-mode {
+    display: none;
+    width: 60%; /* Ajuste a largura conforme necessário */
+}
+
+/* Quando estiver no modo de edição, esconde o texto e mostra os inputs */
+.is-editing .view-mode {
+    display: none;
+}
+.is-editing .edit-mode {
+    display: block;
+}
+
+.detalhes-botoes-topo {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.detalhes-secao-completa {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--cor-bordas, #444);
+}
+
+.checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checklist-item label {
+    font-weight: normal;
+}
+
+/* Esconde os inputs de texto no modo de visualização */
+.modal-body:not(.is-editing) .edit-mode {
+    display: none;
+}
+
+/* Esconde os spans no modo de edição */
+.modal-body.is-editing .view-mode {
+    display: none;
+}
+
+.modal-body {
+    max-height: calc(100vh - 200px); /* Altura da tela menos o espaço para header, footer e margens */
+    overflow-y: auto; /* Adiciona a barra de rolagem vertical automaticamente */
+    padding-right: 15px; /* Espaço para a barra de rolagem não cobrir o conteúdo */
+}
+
+/* Deixa a seção do checklist mais organizada */
+.detalhes-secao-completa h3 {
+    margin-bottom: 15px;
+}
+
+/* Melhora a grade do checklist */
+.checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Cria colunas responsivas */
+    gap: 12px;
+}
+
+/* Melhora a aparência de cada item do checklist */
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--fundo-secundario, #2a2f3a);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.checklist-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+#interacao-manual-section {
+    display: none; /* Começa escondida e só aparece no modo de visualização */
+}
+
+.modal-body:not(.is-editing) #interacao-manual-section {
+    display: block; /* Mostra a seção apenas quando NÃO está em modo de edição */
+}
+
+#interacao-descricao {
+    width: 100%;
+    min-height: 80px;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--cor-bordas, #555);
+    background-color: var(--fundo-secundario, #2a2f3a);
+    color: var(--texto-principal, #fff);
+    resize: vertical;
+}
+
+.interacao-botoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-interacao {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--cor-primaria-hover, #0056b3);
+    color: white;
+    font-weight: bold;
+}
+.btn-interacao:hover {
+    opacity: 0.9;
+}
+/* EM: client/css/modal.css */
+
+.error-message {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.error-message.success {
+    color: #48BB78; /* Verde para sucesso */
+}
+
+.error-message.error {
+    color: #E53E3E; /* Vermelho para erro */
+}

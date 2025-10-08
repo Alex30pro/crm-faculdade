@@ -1,0 +1,146 @@
+/* client/css/table.css */
+
+/* --- ESTILOS DE BASE DA TABELA (ADICIONADOS) --- */
+#contacts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    color: var(--texto-principal);
+    background-color: var(--fundo-secundario);
+    border-radius: 8px;
+    overflow: hidden; /* Garante que o border-radius aplique nos cantos */
+}
+
+#contacts-table thead {
+    background-color: var(--fundo-terciario);
+}
+
+#contacts-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--texto-branco);
+    border-bottom: 2px solid var(--cor-borda);
+}
+
+#contacts-table tbody tr {
+    border-bottom: 1px solid var(--cor-borda);
+    transition: background-color 0.2s;
+}
+
+#contacts-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+#contacts-table tbody tr:hover {
+    background-color: var(--fundo-terciario);
+}
+
+/* Célula da tabela */
+#contacts-table td {
+    padding: 15px;
+    vertical-align: middle;
+    border: none; /* <-- ADICIONE ESTA LINHA PARA REMOVER A BORDA DUPLICADA */
+}
+
+/* Célula que contém os botões */
+#contacts-table td.actions {
+    vertical-align: middle;
+}
+
+/* Wrapper flexível para os botões */
+.actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+}
+
+/* (O resto do código dos botões continua igual...) */
+#contacts-table .actions button {
+    padding: 6px 12px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white; 
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+}
+
+#contacts-table .actions button:hover {
+    opacity: 0.85;
+}
+
+button.edit-btn {
+    background-color: #28a745; 
+}
+
+button.delete-btn {
+    background-color: #dc3545; 
+}
+
+/* Deixa o nome do contato clicável */
+.contact-name {
+    cursor: pointer;
+    font-weight: bold;
+    color: #00aaff; /* Cor de destaque para o nome */
+    transition: color 0.2s;
+}
+
+.contact-name:hover {
+    color: #007bff;
+}
+
+/* Estilos para os campos de edição na tabela */
+.edit-input, .edit-select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+    background-color: var(--fundo-principal);
+    border: 1px solid var(--cor-borda-input);
+    border-radius: 4px;
+    color: var(--texto-principal);
+}
+
+/* Estilos para a célula de status com o ícone de lembrete */
+.status-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaço entre o status e o ícone */
+}
+
+.lembrete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em; /* Tamanho do emoji */
+    padding: 0;
+    line-height: 1;
+}
+
+/* Cor para lembrete ativo */
+.lembrete-btn.lembrete-ativo {
+    color: #00aaff; /* Azul para indicar que está agendado */
+}
+
+/* Cor e animação para lembrete vencido */
+.lembrete-btn.lembrete-vencido {
+    color: #dc3545; /* Vermelho */
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+tr.lembrete-vencido-linha {
+    background-color: #4a2c2c !important; /* Um fundo avermelhado sutil */
+    color: #fff !important;
+}
+
+tr.lembrete-vencido-linha .contact-name {
+    font-weight: bold;
+}
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="js/auth.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Usuários - ConnectaCRM</title>
+    <link rel="stylesheet" href="css/header.css"> 
+    <link rel="stylesheet" href="css/dashboard-content.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/moderno.css"> 
+</head>
+<body>
+    <header class="main-header"></header>
+
+    <main class="main-content">
+        <div class="container">
+            <section id="users-section">
+                <div class="section-header">
+                    <h2>Gerenciamento de Usuários</h2>
+                    <button id="add-user-btn" class="btn btn-primary">Adicionar Novo Usuário</button>
+                </div>
+                <table id="users-table" class="crm-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Cargo</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <div id="add-user-modal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2>Adicionar Novo Usuário</h2>
+                <button id="add-user-modal-close-btn" class="modal-close-btn">&times;</button>
+            </header>
+            <div class="modal-body">
+                <form id="add-user-form">
+                    <div class="form-group">
+                        <label for="add-user-nome">Nome</label>
+                        <input type="text" id="add-user-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-user-email">E-mail</label>
+                        <input type="email" id="add-user-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-user-senha">Senha Provisória</label>
+                        <input type="password" id="add-user-senha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-user-role">Cargo</label>
+                        <select id="add-user-role" required>
+                            <option value="user" selected>Usuário</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+                    <p id="add-user-error-message" class="error-message"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/usuarios.js"></script>
+</body>
+</html>

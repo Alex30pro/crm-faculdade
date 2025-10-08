@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="js/auth.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lixeira - ConnectaCRM</title>
+    <link rel="stylesheet" href="css/header.css"> 
+    <link rel="stylesheet" href="css/dashboard-content.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/moderno.css"> 
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <h3>ConnectaCRM</h3>
+            </div>
+            <nav class="main-nav">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="lixeira.html" class="nav-link active">Lixeira</a>
+                <a href="kanban.html" class="nav-link">Kanban</a>
+            </nav>
+            <div class="user-menu">
+                <button id="theme-toggle-btn" class="theme-toggle" title="Mudar tema">☀️</button>
+                <div class="user-profile-menu">
+                    <div class="avatar">
+                        <span id="user-initial"></span>
+                    </div>
+                    <span id="user-name"></span>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="change-password-link">Mudar Senha</a></li>
+                        <li><a href="#" id="logout-btn">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section id="contacts-section">
+                <h2>Contatos Excluídos</h2>
+                <table id="lixeira-table" class="crm-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Data da Exclusão</th>
+                            <th>Excluído Por</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <script type="module" src="js/lixeira.js"></script>
+</body>
+</html>

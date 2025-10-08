@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="js/auth.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Alunos - ConnectaCRM</title>
+    <link rel="stylesheet" href="css/header.css"> 
+    <link rel="stylesheet" href="css/dashboard-content.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/moderno.css"> 
+    <script src="https://unpkg.com/imask"></script>
+</head>
+<body>
+
+<header class="main-header"></header>
+
+    <main class="main-content">
+        <div class="container">
+            <section id="form-section">
+                <h2>Adicionar Novo Contato</h2>
+                <form id="add-contact-form">
+                    <input type="text" id="nome" placeholder="Nome do Aluno" required>
+                    <input type="email" id="email" placeholder="E-mail" required>
+                    <input type="tel" id="telefone" placeholder="Telefone" required>
+                    <input type="text" id="curso_interesse" name="curso_interesse" placeholder="Curso de Interesse">
+                    <input type="text" id="canal_aquisicao" name="canal_aquisicao" placeholder="Canal de Aquisição">
+
+                    <select id="polo_id" required>
+                        <option value="" disabled selected>Selecione um polo...</option>
+                    </select>
+                    
+                    <select id="status_id" required>
+                        <option value="" disabled selected>Selecione um status...</option>
+                    </select>
+                    <button type="submit">Salvar</button>
+                </form>
+            </section>
+
+         <section id="filters-section">
+            <div class="search-bar">
+                <input type="search" id="search-input" placeholder="Buscar por nome, e-mail ou telefone...">
+            </div>
+            <div class="filters-bar">
+                <select id="filter-status">
+                    <option value="">Todos os Status</option>
+                </select>
+                <select id="filter-polo">
+                    <option value="">Todos os Polos</option>
+                </select>
+                <select id="filter-responsavel">
+                    <option value="">Todos os Responsáveis</option>
+                </select>
+                <button id="export-csv-btn" class="btn-export">Baixar Tabela Excel</button>
+            </div>
+        </section>
+
+            <section id="contacts-section">
+                <h2>Lista de Contatos</h2>
+                <table id="contacts-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Polo</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+    
+    <div id="history-modal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="modal-title">Histórico do Contato</h2>
+                <button id="modal-close-btn" class="modal-close-btn">&times;</button>
+            </header>
+            <div id="modal-body" class="modal-body">
+            </div>
+        </div>
+    </div>
+
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="password-modal-title">Mudar Senha</h2>
+                <button id="password-modal-close-btn" class="modal-close-btn">&times;</button>
+            </header>
+            <div class="modal-body">
+                <form id="change-password-form">
+                    <div class="form-group">
+                        <label for="senha-atual">Senha Atual</label>
+                        <input type="password" id="senha-atual" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nova-senha">Nova Senha</label>
+                        <input type="password" id="nova-senha" required>
+                    </div>
+                    <button type="submit">Salvar Nova Senha</button>
+                    <p id="password-error-message" class="error-message"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="lembrete-modal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="lembrete-modal-title">Agendar Lembrete</h2>
+                <button id="lembrete-modal-close-btn" class="modal-close-btn">&times;</button>
+            </header>
+            <div class="modal-body">
+                <input type="hidden" id="lembrete-modo" value="criar">
+                
+                <div class="form-group">
+                    <label for="lembrete-descricao">Descrição do Lembrete:</label>
+                    <textarea id="lembrete-descricao" rows="3" placeholder="Ex: Ligar para confirmar se enviou a identidade..."></textarea>
+                </div>
+
+                <div class="lembrete-options">
+                    <p>Definir lembrete para:</p>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-days="3">3 Dias</button>
+                        <button class="preset-btn" data-days="7">1 Semana</button>
+                        <button class="preset-btn" data-days="30">1 Mês</button>
+                    </div>
+                    <hr class="lembrete-divider">
+                    <p>Ou escolha uma data e hora específica:</p>
+                    <input type="datetime-local" id="lembrete-datetime" class="lembrete-input">
+                </div>
+                <button id="salvar-lembrete-btn" type="submit">Salvar Lembrete</button>
+                <button id="remover-lembrete-btn" type="button" class="btn-danger">Remover Lembrete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="detalhes-modal" class="modal">
+    <div class="modal-content modal-lg"> <header class="modal-header">
+            <h2 id="detalhes-modal-title">Detalhes do Contato</h2>
+            <button id="detalhes-modal-close-btn" class="modal-close-btn">&times;</button>
+        </header>
+            <div class="modal-body">
+                <div class="detalhes-botoes-topo">
+                    <button id="detalhes-edit-btn">Editar Dados</button>
+                    <button id="detalhes-history-btn">Ver Histórico</button>
+                    <button id="detalhes-save-btn" class="btn-success" style="display: none;">Salvar Alterações</button>
+                    <button id="detalhes-cancel-btn" class="btn-danger" style="display: none;">Cancelar Edição</button>
+                </div>
+
+                <div class="detalhes-grid">
+                    <div class="detalhes-coluna">
+                        <h3>Informações Pessoais</h3>
+                        <p><strong>Nome:</strong> <span class="view-mode" id="detalhes-nome"></span><input type="text" class="edit-mode" id="edit-nome"></p>
+                        <p><strong>CPF:</strong> <span class="view-mode" id="detalhes-cpf"></span><input type="text" class="edit-mode" id="edit-cpf"></p>
+                        <p><strong>RG:</strong> <span class="view-mode" id="detalhes-rg"></span><input type="text" class="edit-mode" id="edit-rg"></p>
+                        <p><strong>Data de Nascimento:</strong> <span class="view-mode" id="detalhes-data_nascimento"></span><input type="date" class="edit-mode" id="edit-data_nascimento"></p>
+
+                        <h3>Contato</h3>
+                        <p><strong>E-mail:</strong> <span class="view-mode" id="detalhes-email"></span><input type="email" class="edit-mode" id="edit-email"></p>
+                        <p><strong>Telefone:</strong> <span class="view-mode" id="detalhes-telefone"></span><input type="tel" class="edit-mode" id="edit-telefone"></p>
+                    </div>
+
+                    <div class="detalhes-coluna">
+                        <h3>Informações da Matrícula</h3>
+                        <p><strong>Polo:</strong> <span class="view-mode" id="detalhes-polo"></span><select class="edit-mode" id="edit-polo_id"></select></p>
+                        <p><strong>Status:</strong> <span class="view-mode" id="detalhes-status"></span><select class="edit-mode" id="edit-status_id"></select></p>
+                        
+                        <p><strong>Curso de Interesse:</strong> <span class="view-mode" id="detalhes-curso_interesse"></span><input type="text" class="edit-mode" id="edit-curso_interesse"></p>
+                        <p><strong>Canal de Aquisição:</strong> <span class="view-mode" id="detalhes-canal_aquisicao"></span><input type="text" class="edit-mode" id="edit-canal_aquisicao"></p>
+                        <h3>Endereço</h3>
+                        <p><strong>CEP:</strong> <span class="view-mode" id="detalhes-cep"></span><input type="text" class="edit-mode" id="edit-endereco_cep"></p>
+                        <p><strong>Rua:</strong> <span class="view-mode" id="detalhes-rua"></span><input type="text" class="edit-mode" id="edit-endereco_rua"></p>
+                        <p><strong>Número:</strong> <span class="view-mode" id="detalhes-numero"></span><input type="text" class="edit-mode" id="edit-endereco_numero"></p>
+                        <p><strong>Bairro:</strong> <span class="view-mode" id="detalhes-bairro"></span><input type="text" class="edit-mode" id="edit-endereco_bairro"></p>
+                        <p><strong>Cidade:</strong> <span class="view-mode" id="detalhes-cidade"></span><input type="text" class="edit-mode" id="edit-endereco_cidade"></p>
+                        <p><strong>Estado:</strong> <span class="view-mode" id="detalhes-estado"></span><input type="text" class="edit-mode" id="edit-endereco_estado"></p>
+                    </div>
+                </div>
+
+                <div class="detalhes-secao-completa">
+                    <h3>Checklist de Documentos</h3>
+                    <div id="documentos-checklist-container" class="checklist-grid"></div>
+                </div>
+
+                <div class="detalhes-secao-completa" id="interacao-manual-section">
+                    <h3>Registrar Nova Interação</h3>
+                    <textarea id="interacao-descricao" placeholder="Descreva a interação aqui... (Ex: Cliente confirmou interesse no curso de Direito, pediu para retornar na sexta-feira)"></textarea>
+                    <div class="interacao-botoes">
+                        <button class="btn-interacao" data-tipo="Ligação">📞 Registrar Ligação</button>
+                        <button class="btn-interacao" data-tipo="E-mail">✉️ Registrar E-mail</button>
+                        <button class="btn-interacao" data-tipo="Anotação">📝 Salvar Anotação</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

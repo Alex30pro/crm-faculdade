@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios - ConnectaCRM</title>
+    <link rel="stylesheet" href="css/geral.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/moderno.css">
+    <style> /* Estilos rápidos para o layout do dashboard */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; padding: 20px; }
+        .chart-container {
+            position: relative; /* Essencial para o Chart.js controlar o tamanho do canvas */
+            height: 400px;      /* Define uma altura fixa para o container do gráfico */
+            width: 100%;        /* Garante que ele ocupe o espaço horizontal disponível */
+            background-color: var(--fundo-secundario);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chart-container-header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px 0 20px;
+            background-color: var(--fundo-secundario);
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .date-filters {
+            display: flex;
+            gap: 10px;
+        }
+        .date-filters select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--cor-bordas);
+            background-color: var(--fundo-terciario);
+            color: var(--texto-principal);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header"></header>
+
+    <main class="main-content">
+        <div class="dashboard-grid">
+            <div class="chart-container">
+                <canvas id="chartCanalAquisicao"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartPolo"></canvas>
+            </div>
+             <div class="chart-container-header">
+                <h2>Novos Contatos no Mês</h2>
+                <div class="date-filters">
+                    <select id="filter-month"></select>
+                    <select id="filter-year"></select>
+                </div>
+            </div>
+            <div class="chart-container" style="grid-column: 1 / -1;"> 
+                <canvas id="chartNovosContatos"></canvas>
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script type="module" src="js/relatorios.js"></script>
+</body>
+</html>

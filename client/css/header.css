@@ -1,0 +1,140 @@
+/* client/css/header.css */
+
+.main-header {
+    background-color: var(--fundo-secundario);
+    padding: 0 30px;
+    border-bottom: 1px solid var(--cor-borda);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+}
+
+.header-logo h3 {
+    font-size: 1.8em;
+    color: var(--texto-branco);
+}
+
+.main-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-link {
+    color: var(--texto-secundario);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--texto-branco);
+    background-color: var(--fundo-terciario);
+}
+
+.nav-link.active {
+    color: var(--texto-branco);
+    font-weight: bold;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--texto-principal);
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.user-profile-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-profile-menu:hover .dropdown-menu {
+    display: block;
+}
+
+.user-profile-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    /* Adicionamos um pouco de preenchimento para aumentar a área de hover */
+    padding: 15px 0;
+}
+
+.user-profile-menu #user-name {
+    color: var(--texto-principal);
+    font-weight: 500;
+    padding-right: 10px;
+}
+
+.user-profile-menu .avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--cor-primaria); /* Usando a variável de cor */
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.user-profile-menu .dropdown-menu {
+    /* MUDANÇA PRINCIPAL: Escondido com opacidade e visibilidade */
+    opacity: 0;
+    visibility: hidden;
+    
+    position: absolute;
+    top: 100%; /* Posiciona o menu exatamente no fim do container pai */
+    right: 0;
+    
+    /* Adiciona uma transição suave para o efeito de fade-in/out */
+    transition: opacity 0.2s ease-in-out;
+    
+    background-color: var(--fundo-secundario);
+    border: 1px solid var(--cor-bordas);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    z-index: 1000;
+    min-width: 160px;
+}
+
+/* A MÁGICA: Ao passar o mouse sobre o container, o menu se torna visível */
+.user-profile-menu:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.user-profile-menu .dropdown-menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--texto-principal);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.user-profile-menu .dropdown-menu li a:hover {
+    background-color: var(--fundo-terciario);
+}
