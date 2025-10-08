@@ -51,7 +51,7 @@ export function renderHeader() {
                 event.preventDefault();
                 if (passwordErrorMessage) passwordErrorMessage.textContent = '';
                 try {
-                    const response = await fetch('http://localhost:3000/api/auth/mudar-senha', {
+                    const response = await fetch('/api/auth/mudar-senha', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('authToken')}` },
                         body: JSON.stringify({
