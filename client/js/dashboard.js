@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (!authToken || !user) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
 
@@ -94,7 +94,7 @@ async function inicializarDados() {
         // 1. Pega o usuário do localStorage para saber a permissão
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) {
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
             return;
         }
         const isAdmin = user.role && user.role.toLowerCase() === 'admin';

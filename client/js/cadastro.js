@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await api.registerUser({ nome, email, senha });
             alert(response.message);
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         } catch (error) {
             errorMessage.textContent = error.message;
             errorMessage.style.display = 'block';

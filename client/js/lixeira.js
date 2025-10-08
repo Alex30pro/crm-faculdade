@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (!authToken || !user) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return; 
     }
     

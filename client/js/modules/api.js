@@ -6,7 +6,7 @@ function handleAuthError() {
     // Usar removeItem é um pouco mais seguro que clear()
     localStorage.removeItem('authToken'); 
     localStorage.removeItem('user');
-    window.location.href = 'login.html'; // Redireciona para o login
+    window.location.href = 'index.html'; // Redireciona para o login
 }
 
 /**

@@ -132,7 +132,7 @@ export function renderHeader() {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.clear();
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     }
 
