@@ -1,0 +1,35 @@
+// EM: server/db/seeds/criar_admin_mestre.js
+
+const bcrypt = require('bcryptjs');
+
+exports.seed = async function(knex) {
+  const adminEmail = 'admin@crm.com';
+  const adminNome = 'Admin Master';
+
+  // 1. Verifica se o usuário admin já existe no banco de dados
+  const adminExists = await knex('usuarios').where({ email: adminEmail }).first();
+
+  // 2. Se o admin NÃO existir, então nós o criamos.
+  if (!adminExists) {
+    console.log(`Usuário ${adminEmail} não encontrado, criando novo...`);
+    
+    // Gera o hash da senha
+    const saltRounds = 10;
+    const adminPassword = 'admin'; // Defina a senha padrão inicial aqui
+    const hashedPassword = await bcrypt.hash(adminPassword, saltRounds);
+
+    // Insere o novo usuário admin
+    await knex('usuarios').insert({
+      nome: adminNome,
+      email: adminEmail,
+      senha_hash: hashedPassword,
+      role: 'admin',
+      is_active: true
+    });
+    
+    console.log(`Usuário ${adminEmail} criado com sucesso.`);
+  } else {
+    // Se o admin JÁ existir, apenas exibe uma mensagem e não faz nada.
+    console.log(`Usuário ${adminEmail} já existe. Nenhuma ação necessária.`);
+  }
+};
