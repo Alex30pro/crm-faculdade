@@ -15,9 +15,7 @@ const analyticsRoutes = require('./routes/analyticsRoutes');
 const publicRoutes = require('./routes/publicRoutes');
 
 const app = express();
-// --- CORREÇÃO 1: A Porta ---
-// O Render define a porta através de process.env.PORT. 
-// Usamos 3000 apenas como fallback para rodar no seu PC.
+
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -39,8 +37,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-// --- CORREÇÃO 2: O Host ---
-// Adicionamos '0.0.0.0' para que o Render possa se conectar à aplicação.
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando na porta ${PORT}.`);
 });
