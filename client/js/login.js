@@ -1,5 +1,7 @@
 // client/js/login.js
 
+console.log(">>>> O ARQUIVO login.js FOI CARREGADO! <<<<");
+
 import * as api from './modules/api.js';
 
 document.addEventListener('DOMContentLoaded', () => {
