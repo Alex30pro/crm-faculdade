@@ -1,13 +1,10 @@
-// EM: client/js/relatorios.js
-
 import * as api from './modules/api.js';
 import { renderHeader } from './modules/header.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Renderiza o cabeçalho centralizado
+
     renderHeader();
 
-    // Lógica de autenticação para proteger a página
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || user.role.toLowerCase() !== 'admin') {
         alert('Acesso negado. Apenas administradores podem ver esta página.');
@@ -15,16 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
-    // Variável global para guardar a instância do gráfico de barras para atualizações
     let barChartInstance = null;
     
-    // --- CONFIGURAÇÕES GLOBAIS DE ESTILO PARA TODOS OS GRÁFICOS ---
     Chart.defaults.font.family = "'Inter', sans-serif";
     Chart.defaults.color = '#aaa';
     Chart.defaults.plugins.legend.labels.boxWidth = 12;
     
-    // --- FUNÇÕES DE RENDERIZAÇÃO DOS GRÁFICOS ---
-
     function renderizarChartCanal(data) {
         const ctx = document.getElementById('chartCanalAquisicao').getContext('2d');
         new Chart(ctx, {
@@ -83,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Se o gráfico já existe, apenas atualiza seus dados. Se não, cria um novo.
         if (barChartInstance) {
             barChartInstance.data.labels = labels;
             barChartInstance.data.datasets[0].data = chartData;
@@ -115,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- FUNÇÕES PARA OS FILTROS DE DATA ---
     function popularFiltrosDeData() {
         const mesSelect = document.getElementById('filter-month');
         const anoSelect = document.getElementById('filter-year');
@@ -153,10 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- FUNÇÃO DE INICIALIZAÇÃO PRINCIPAL DA PÁGINA ---
     async function inicializarPagina() {
         try {
-            // Carrega os gráficos que não dependem de filtro
+
             const [canalData, poloData] = await Promise.all([
                 api.getMatriculasPorCanal(),
                 api.getMatriculasPorPolo(),
@@ -164,11 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderizarChartCanal(canalData);
             renderizarChartPolo(poloData);
             
-            // Popula os filtros de data e carrega o gráfico de barras com o mês atual
             popularFiltrosDeData();
             await atualizarGraficoDeBarras();
 
-            // Adiciona os listeners para os filtros de data, para que eles atualizem o gráfico
             document.getElementById('filter-month').addEventListener('change', atualizarGraficoDeBarras);
             document.getElementById('filter-year').addEventListener('change', atualizarGraficoDeBarras);
 
@@ -178,6 +166,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Inicia tudo
     inicializarPagina();
 });
