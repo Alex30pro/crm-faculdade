@@ -1,10 +1,9 @@
-/* client/css/login.css */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: var(--fundo-principal); /* Fundo escuro */
+    background-color: var(--fundo-principal);
 }
 
 .login-container {
@@ -73,22 +72,20 @@ body {
 
 .error-message {
     margin-top: 20px;
-    color: var(--cor-perigo); /* Vermelho */
+    color: var(--cor-perigo); 
     background-color: rgba(220, 53, 69, 0.1);
     padding: 10px;
     border-radius: 5px;
 }
 
-/* Estilo para a mensagem de erro */
 .error-message {
     color: var(--cor-perigo, #e53e3e);
     font-size: 0.9em;
     margin-top: 10px;
-    min-height: 1.2em; /* Garante que o layout não "pule" */
-    display: none; /* Começa escondida */
+    min-height: 1.2em; 
+    display: none; 
 }
 
-/* Estilo para os links de "Cadastre-se" e "Faça o login" */
 .signup-link {
     margin-top: 20px;
     font-size: 0.9em;
