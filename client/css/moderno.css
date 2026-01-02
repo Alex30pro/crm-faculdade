@@ -1,34 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* --- 2. NOVA PALETA DE CORES E ESTILOS GERAIS --- */
 :root {
-    /* Tons de fundo */
-    --fundo-principal: #1a202c; /* Cinza-azulado muito escuro */
-    --fundo-secundario: #2d3748; /* Um tom mais claro para os painéis */
-    --fundo-terciario: #4a5568; /* Para hovers e elementos sutis */
+    --fundo-principal: #1a202c; 
+    --fundo-secundario: #2d3748; 
+    --fundo-terciario: #4a5568; 
 
-    /* Cores de texto */
-    --texto-principal: #e2e8f0; /* Um branco suave */
-    --texto-secundario: #a0aec0; /* Cinza claro para texto menos importante */
+    --texto-principal: #e2e8f0; 
+    --texto-secundario: #a0aec0; 
     --texto-titulo: #ffffff;
 
-    /* Cor de destaque principal */
-    --cor-primaria: #4299e1; /* Azul vibrante */
+    --cor-primaria: #4299e1; 
     --cor-primaria-hover: #2b6cb0;
 
-    /* Cores de borda e outras */
     --cor-borda: #4a5568;
     --cor-sucesso: #48bb78;
     --cor-perigo: #f56565;
 }
 
-/* TEMA CLARO (Sobrescreve as variáveis quando a classe .light-theme é aplicada) */
 body.light-theme {
     --fundo-principal: #aeb9c5; 
-
-    /* ALTERAÇÃO AQUI: Fundo dos painéis agora é um cinza mais claro */
     --fundo-secundario: #b4c1ce; 
-
     --fundo-terciario: #ccc4c4; 
 
     --texto-principal: #1e293b; 
@@ -44,23 +35,19 @@ body.light-theme {
     --cor-perigo: #dc2626;
 }
 
-
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--fundo-principal); /* <-- Agora isso funciona para ambos os temas */
+    background-color: var(--fundo-principal); 
     color: var(--texto-principal);
-    transition: background-color 0.3s, color 0.3s; /* Adiciona uma transição suave na troca de tema */
+    transition: background-color 0.3s, color 0.3s; 
 }
 
-/* --- 3. ESPAÇAMENTO, BORDAS E SOMBRAS --- */
-
-/* Ajustes no formulário e na tabela para um visual mais "flutuante" */
 #form-section, #contacts-section {
     background-color: var(--fundo-secundario);
     border: 1px solid var(--cor-borda);
-    border-radius: 12px; /* Cantos mais arredondados */
+    border-radius: 12px; 
     padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
 .main-header {
@@ -75,15 +62,12 @@ h2 {
     margin-bottom: 25px;
 }
 
-/* --- 4. INTERATIVIDADE E TRANSIÇÕES --- */
-
-/* Inputs e Botões */
 input, select {
     background-color: var(--fundo-principal);
     border: 1px solid var(--cor-borda);
     border-radius: 8px;
-    padding: 10px 12px; /* Adicionado para um melhor espaçamento interno */
-    color: var(--texto-principal); /* <-- LINHA ADICIONADA PARA CORRIGIR A COR DA FONTE */
+    padding: 10px 12px;
+    color: var(--texto-principal);
     transition: all 0.2s ease-in-out;
 }
 
@@ -100,7 +84,7 @@ button, .btn {
 }
 
 button:hover, .btn:hover {
-    transform: translateY(-2px); /* Efeito de "levantar" */
+    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -113,7 +97,6 @@ button[type="submit"]:hover, .btn-success:hover {
     background-color: var(--cor-primaria-hover);
 }
 
-/* Tabela */
 .crm-table {
     border-radius: 0;
     background-color: transparent;
@@ -156,7 +139,6 @@ button[type="submit"]:hover, .btn-success:hover {
     border: none;
 }
 
-/* --- 5. CONSISTÊNCIA DE ELEMENTOS --- */
 .status-tag {
     font-weight: 600;
     padding: 4px 12px;
@@ -170,20 +152,17 @@ button[type="submit"]:hover, .btn-success:hover {
     color: var(--cor-primaria);
 }
 
-/* --- AJUSTE PARA LAYOUT DE LARGURA TOTAL --- */
 .container {
     width: 100%;
-    max-width: 100%; /* Remove o limite de largura máxima */
-    padding: 0 40px; /* Adiciona um "respiro" nas laterais para o conteúdo não colar na borda */
-    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+    max-width: 100%; 
+    padding: 0 40px; 
+    box-sizing: border-box; 
 }
 
-/* Opcional: Adiciona um pouco mais de espaço entre os blocos */
 #contacts-section {
     margin-top: 30px;
 }
 
-/* --- ESTILO PARA O BOTÃO RESTAURAR NA LIXEIRA --- */
 button.restore-btn {
     background-color: var(--cor-primaria);
     color: white;
@@ -209,97 +188,76 @@ button.promote-admin-btn {
  }
  
 .btn-delete-permanent {
-    background-color: #dc3545; /* Vermelho perigo */
+    background-color: #dc3545; 
     color: white;
     border: none;
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 8px; /* Espaçamento */
+    margin-left: 8px;
 }
 
 .btn-delete-permanent:hover {
     background-color: #c82333;
 }
 
-/* Estilo para os links do WhatsApp */
 .whatsapp-link {
-    color: inherit; /* Herda a cor do texto normal da tabela */
-    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; 
+    text-decoration: none; 
     transition: color 0.2s;
 }
 
 .whatsapp-link:hover {
-    color: #00aaff; /* Muda para uma cor de destaque ao passar o mouse */
+    color: #00aaff; 
     text-decoration: underline;
 }
 
-/* ==========================================================================
-   PADRÃO DE BOTÕES DO SISTEMA
-   ========================================================================== */
-
-/* --- Classe Base para TODOS os botões --- */
 .btn {
-    /* Remove a aparência padrão do navegador */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    
-    /* Estilo do texto e fonte */
-    color: #FFFFFF; /* COR DA FONTE PADRÃO: BRANCA */
+    color: #FFFFFF; 
     font-weight: 600;
     font-size: 14px;
     text-align: center;
     text-decoration: none;
-
-    /* Espaçamento e Borda */
     padding: 8px 16px;
     border: 1px solid transparent;
     border-radius: 6px;
-
-    /* Comportamento */
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
-/* Efeito ao passar o mouse por cima */
 .btn:hover {
     opacity: 0.85;
 }
 
-
-/* --- Modificadores de Cor --- */
-
-/* Botão Secundário (Cinza) - para "Desativar", "Promover", "Restaurar" */
 .btn-secondary {
-    background-color: #4A5568; /* Fundo cinza escuro */
-    color: #FFFFFF; /* Texto branco */
+    background-color: #4A5568; 
+    color: #FFFFFF; 
     border-color: #4A5568;
 }
 
 .btn-secondary:hover {
-    background-color: #2D3748; /* Cinza um pouco mais escuro no hover */
+    background-color: #2D3748; 
 }
 
-
-/* Botão de Perigo (Vermelho) - para "Excluir Permanente" */
 .btn-danger {
-    background-color: #E53E3E; /* Fundo vermelho */
-    color: #FFFFFF; /* Texto branco */
+    background-color: #E53E3E; 
+    color: #FFFFFF; 
     border-color: #E53E3E;
 }
 
 .btn-danger:hover {
-    background-color: #C53030; /* Vermelho um pouco mais escuro no hover */
+    background-color: #C53030; 
 }
 
-/* Adicional: um botão primário (Azul), caso precise no futuro */
 .btn-primary {
-    background-color: #3182CE; /* Fundo azul */
-    color: #FFFFFF; /* Texto branco */
+    background-color: #3182CE; 
+    color: #FFFFFF; 
     border-color: #3182CE;
 }
 
 .btn-primary:hover {
-    background-color: #2B6CB0; /* Azul um pouco mais escuro no hover */
+    background-color: #2B6CB0; 
 }
