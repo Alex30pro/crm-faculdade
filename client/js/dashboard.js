@@ -1,10 +1,7 @@
-// client/js/dashboard.js
-
 import * as api from './modules/api.js';
 import * as ui from './modules/ui.js';
 import { renderHeader } from './modules/header.js';
 
-// Função Debounce para otimizar a busca, colocada fora para clareza.
 function debounce(func, delay = 300) {
     let timeout;
     return (...args) => {
@@ -14,10 +11,9 @@ function debounce(func, delay = 300) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Renderiza o cabeçalho centralizado
+
     renderHeader();
 
-    // 2. Lógica de autenticação
     const authToken = localStorage.getItem('authToken');
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -26,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- SELETORES ESPECÍFICOS DO DASHBOARD ---
     const tabelaContatosCorpo = document.querySelector("#contacts-table tbody");
     const formAdicionarContato = document.getElementById('add-contact-form');
     const selectStatusForm = document.getElementById('status_id');
@@ -62,11 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
         camposEdit[el.id.replace('edit-', '')] = el;
     });
 
-    // --- VARIÁVEIS DE ESTADO ---
     let contatoAbertoId = null; 
     let contatoIdParaLembrete = null;
     
-    // --- FUNÇÃO CENTRAL DE BUSCA E RENDERIZAÇÃO ---
     async function buscarErenderizarContatos() {
         const searchInput = document.getElementById('search-input');
         const statusFilter = document.getElementById('filter-status');
@@ -88,10 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- INICIALIZAÇÃO DOS DADOS ---
 async function inicializarDados() {
     try {
-        // 1. Pega o usuário do localStorage para saber a permissão
+
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) {
             window.location.href = 'index.html';
@@ -99,7 +91,6 @@ async function inicializarDados() {
         }
         const isAdmin = user.role && user.role.toLowerCase() === 'admin';
 
-        // 2. Monta a lista de requisições de forma condicional
         const promisesToRun = [
             api.getStatus(),
             api.getPolos()
@@ -110,11 +101,9 @@ async function inicializarDados() {
 
         const results = await Promise.all(promisesToRun);
 
-        // 3. Extrai os resultados
         const statuslist = results[0];
         const pololist = results[1];
         
-        // As renderizações de status e polo continuam as mesmas
         if (selectStatusForm) ui.renderStatusOptions(statuslist, selectStatusForm);
         if (selectPoloForm) ui.renderPoloOptions(pololist, selectPoloForm);
 
@@ -126,21 +115,18 @@ async function inicializarDados() {
         ui.renderStatusOptions(statuslist, document.getElementById('filter-status'), 'Todos os Status');
         ui.renderPoloOptions(pololist, document.getElementById('filter-polo'), 'Todos os Polos');
 
-        // 4. Renderiza ou esconde o filtro de responsáveis
         const filtroResponsavel = document.getElementById('filter-responsavel');
         if (isAdmin) {
-            const userlist = results[2]; // Pega a lista de usuários que só o admin recebeu
+            const userlist = results[2]; 
             ui.renderUserOptions(userlist, filtroResponsavel, 'Todos os Responsáveis');
         } else {
-            // Se não for admin, esconde o filtro para não ficar um dropdown vazio
             if (filtroResponsavel && filtroResponsavel.parentElement) {
                 filtroResponsavel.parentElement.style.display = 'none';
             }
         }
         
         await buscarErenderizarContatos();
-        const contatosIniciais = await api.getContatos(); // Busca sem filtro para as notificações
-       // verificarLembretesENotificar(contatosIniciais);
+        const contatosIniciais = await api.getContatos(); 
 
     } catch (error) {
         console.error("Erro ao inicializar a página:", error);
@@ -148,7 +134,6 @@ async function inicializarDados() {
     }
 }
     
-    // --- FUNÇÕES AUXILIARES E DE MODAL ---
     function renderChecklist(checklistData, isEditing) {
         const container = document.getElementById('documentos-checklist-container');
         if (!container) return;
@@ -227,7 +212,6 @@ async function inicializarDados() {
         api.getContatoById(contatoAbertoId).then(contato => renderChecklist(contato.documentos_checklist, isEditing));
     }
 
-    // --- LÓGICA DOS EVENT LISTENERS ---
     function setupEventListeners() {
         if (formAdicionarContato) {
             formAdicionarContato.addEventListener('submit', async (event) => {
@@ -269,13 +253,11 @@ async function inicializarDados() {
                     if (responsavelFilter && responsavelFilter.value) params.append('responsavel', responsavelFilter.value);
                     if (searchInput && searchInput.value) params.append('search', searchInput.value.trim());
 
-                    // --- PEQUENA MUDANÇA NA LÓGICA DE MONTAGEM DA STRING ---
                     let queryString = params.toString();
                     if (queryString) {
-                        queryString = `?${queryString}`; // Adiciona o '?' apenas se houver parâmetros
+                        queryString = `?${queryString}`; 
                     }
                     
-                    // Chama a função da API que envia o token
                     const response = await api.exportContatosCSVRequest(queryString);
 
                     const blob = await response.blob();
@@ -417,7 +399,6 @@ async function inicializarDados() {
         if(lembreteModal) lembreteModal.addEventListener('click', (e) => { if (e.target === lembreteModal) ui.esconderModalLembrete(); });
     }
 
-    // --- CHAMADAS FINAIS ---
     inicializarDados();
     setupEventListeners();
 });
