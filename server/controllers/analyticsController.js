@@ -1,8 +1,5 @@
-// EM: server/controllers/analyticsController.js
-
 const db = require('../db/connection');
 
-// Gráfico 1: Matriculados por Canal de Aquisição
 exports.getMatriculasPorCanal = async (req, res) => {
     try {
         const dados = await db('contatos')
@@ -20,7 +17,6 @@ exports.getMatriculasPorCanal = async (req, res) => {
     }
 };
 
-// Gráfico 3 (Bônus, mas muito útil): Matriculados por Polo
 exports.getMatriculasPorPolo = async (req, res) => {
     try {
         const dados = await db('contatos')
@@ -42,19 +38,17 @@ exports.getNovosContatosMes = async (req, res) => {
         const ano = parseInt(req.query.year) || new Date().getFullYear();
         const mes = parseInt(req.query.month) || new Date().getMonth() + 1;
 
-        // Formatamos as datas como strings no formato YYYY-MM-DD HH:MM:SS
-        // para garantir a compatibilidade total com o SQLite na cláusula whereBetween.
         const primeiroDia = `${ano}-${String(mes).padStart(2, '0')}-01 00:00:00`;
 
-        const ultimoDiaDoMes = new Date(ano, mes, 0).getDate(); // Pega o último dia (ex: 28, 30, 31)
+        const ultimoDiaDoMes = new Date(ano, mes, 0).getDate(); 
         const ultimoDia = `${ano}-${String(mes).padStart(2, '0')}-${ultimoDiaDoMes} 23:59:59`;
 
         const dados = await db('contatos')
             .select(db.raw("strftime('%d', created_at) as dia"))
             .count('id as total')
-            // Agora a comparação será feita entre textos no mesmo formato
+
             .whereBetween('created_at', [primeiroDia, ultimoDia])
-            .whereNull('deletado_em') // Garante que não estamos contando contatos da lixeira
+            .whereNull('deletado_em') 
             .groupBy('dia')
             .orderBy('dia', 'asc');
             
