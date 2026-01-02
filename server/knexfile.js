@@ -1,5 +1,3 @@
-// EM: server/knexfile.js (VERSÃO FINAL COM ESTRUTURA DE CONEXÃO ROBUSTA)
-
 require('dotenv').config();
 
 module.exports = {
@@ -18,15 +16,12 @@ module.exports = {
     }
   },
 
-  // ===============================================================
-  // >> CORREÇÃO IMPORTANTE AQUI <<
-  // ===============================================================
   production: {
     client: 'pg',
-    // A 'connection' agora é um objeto para incluir o SSL
+
     connection: {
-      connectionString: process.env.DATABASE_URL, // A URL do banco entra aqui
-      ssl: { rejectUnauthorized: false }         // O SSL entra AQUI DENTRO
+      connectionString: process.env.DATABASE_URL, 
+      ssl: { rejectUnauthorized: false }         
     },
     migrations: {
       directory: './db/migrations'
