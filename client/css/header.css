@@ -1,5 +1,3 @@
-/* client/css/header.css */
-
 .main-header {
     background-color: var(--fundo-secundario);
     padding: 0 30px;
@@ -74,7 +72,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    /* Adicionamos um pouco de preenchimento para aumentar a área de hover */
     padding: 15px 0;
 }
 
@@ -91,7 +88,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--cor-primaria); /* Usando a variável de cor */
+    background-color: var(--cor-primaria); 
     color: white;
     border-radius: 50%;
     font-weight: bold;
@@ -99,15 +96,13 @@
 }
 
 .user-profile-menu .dropdown-menu {
-    /* MUDANÇA PRINCIPAL: Escondido com opacidade e visibilidade */
     opacity: 0;
     visibility: hidden;
     
     position: absolute;
-    top: 100%; /* Posiciona o menu exatamente no fim do container pai */
+    top: 100%; 
     right: 0;
     
-    /* Adiciona uma transição suave para o efeito de fade-in/out */
     transition: opacity 0.2s ease-in-out;
     
     background-color: var(--fundo-secundario);
@@ -121,7 +116,6 @@
     min-width: 160px;
 }
 
-/* A MÁGICA: Ao passar o mouse sobre o container, o menu se torna visível */
 .user-profile-menu:hover .dropdown-menu {
     opacity: 1;
     visibility: visible;
