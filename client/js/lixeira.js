@@ -1,12 +1,10 @@
-// Arquivo: client/js/lixeira.js (VERSÃO FINAL E CENTRALIZADA)
 import * as api from './modules/api.js';
 import * as ui from './modules/ui.js';
 import { renderHeader } from './modules/header.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderHeader(); // Perfeito! Cabeçalho centralizado.
+    renderHeader(); 
 
-    // --- LÓGICA DE AUTENTICAÇÃO E SEGURANÇA ---
     const authToken = localStorage.getItem('authToken');
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -15,12 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return; 
     }
     
-    // --- SELETORES DE ELEMENTOS ---
     const tabelaCorpo = document.querySelector("#lixeira-table tbody");
-    const changePasswordForm = document.getElementById('change-password-form'); // Mantido caso o modal de senha seja usado aqui
-    const passwordErrorMessage = document.getElementById('password-error-message'); // Mantido caso o modal de senha seja usado aqui
+    const changePasswordForm = document.getElementById('change-password-form'); 
+    const passwordErrorMessage = document.getElementById('password-error-message');
 
-    // --- LÓGICA PRINCIPAL DA LIXEIRA ---
     async function carregarLixeira() {
         try {
             const contatosDeletados = await api.getLixeira();
@@ -57,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- EVENT LISTENERS ---
     function setupEventListeners() {
         
       tabelaCorpo.addEventListener('click', async (event) => {
@@ -93,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- INICIALIZAÇÃO ---
     carregarLixeira();
     setupEventListeners();
 });
