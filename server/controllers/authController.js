@@ -1,12 +1,9 @@
-// server/controllers/authController.js
-
 const db = require('../db/connection');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = require('../config'); // Importa a chave do arquivo central
+const { JWT_SECRET } = require('../config'); 
 
-// Função para processar o login
 const login = async (req, res) => {
     const { email, senha } = req.body;
 
@@ -42,13 +39,10 @@ const login = async (req, res) => {
     }
 }
 
-// ===============================================================
-// >> NOVA FUNÇÃO: Mudar a Senha
-// ===============================================================
 const mudarSenha = async (req, res) => {
     try {
         const { senhaAtual, novaSenha } = req.body;
-        // Pega o ID do usuário do TOKEN, que é a forma segura!
+
         const usuarioId = req.user.id;
 
         if (!senhaAtual || !novaSenha) {
@@ -96,8 +90,6 @@ const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const senhaHash = await bcrypt.hash(senha, salt);
 
-        // --- CORREÇÃO AQUI ---
-        // Trocamos 'senha' por 'senha_hash' para corresponder ao nome da coluna no banco de dados.
         await db('usuarios').insert({
             nome,
             email,
