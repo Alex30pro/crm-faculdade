@@ -1,47 +1,31 @@
-/* client/css/modal.css */
-
 .modal {
-    /* Estado inicial: escondido. O JS vai mudar para 'flex' para exibir. */
     display: none; 
-
-    /* Posicionamento para cobrir a tela inteira */
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-
-    /* Z-index ALTO para garantir que fique na frente de TUDO */
     z-index: 1000;
-
-    /* Fundo semi-transparente para o efeito de overlay */
     background-color: rgba(0, 0, 0, 0.6);
-
-    /* Alinha o conteúdo do modal (a caixa branca/cinza) no centro */
-    display: flex; /* Mantenha flex para quando for exibido */
+    display: flex; 
     justify-content: center;
     align-items: center;
-
-    /* Inicialmente escondido de forma suave */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Estilo para quando o modal está visível (o JS adiciona o display:flex) */
 .modal[style*="display: flex"] {
     opacity: 1;
     visibility: visible;
 }
 
-
-/* Estilo para a caixa de conteúdo do modal */
 .modal-content {
-    background-color: #2D3748; /* Cor de fundo para tema escuro */
+    background-color: #2D3748; 
     padding: 24px;
     border-radius: 8px;
     width: 100%;
-    max-width: 500px; /* Largura máxima do modal */
+    max-width: 500px; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     position: relative;
 }
@@ -72,7 +56,6 @@
     color: var(--texto-principal);
 }
 
-/* --- ESTILOS PARA FORMULÁRIOS DENTRO DO MODAL --- */
 .modal-body .form-group {
     margin-bottom: 15px;
 }
@@ -104,11 +87,9 @@
 .modal-body .error-message {
     color: #ff6b6b;
     margin-top: 10px;
-    display: none; /* Escondido por padrão */
+    display: none; 
 }
 
-
-/* --- ESTILOS PARA A LISTA DE HISTÓRICO --- */
 .history-list {
     list-style: none;
     padding: 0;
@@ -134,7 +115,6 @@
     color: var(--texto-secundario);
 }
 
-/* Estilos para o conteúdo do modal de lembrete */
 .lembrete-options p {
     margin-top: 0;
     font-weight: bold;
@@ -165,7 +145,7 @@
     width: 100%;
     padding: 12px;
     margin-top: 10px;
-    display: none; /* Começa escondido */
+    display: none;
 }
 
 .modal-body textarea {
@@ -181,9 +161,6 @@
     resize: vertical;
 }
 
-/* Em client/css/modal.css */
-
-/* Estilo para modais maiores */
 .modal-content.modal-lg {
     max-width: 800px;
 }
@@ -212,13 +189,11 @@
     margin-right: 10px;
 }
 
-/* Lógica de Edição: esconde os inputs por padrão */
 .edit-mode {
     display: none;
-    width: 60%; /* Ajuste a largura conforme necessário */
+    width: 60%; 
 }
 
-/* Quando estiver no modo de edição, esconde o texto e mostra os inputs */
 .is-editing .view-mode {
     display: none;
 }
@@ -256,35 +231,29 @@
     font-weight: normal;
 }
 
-/* Esconde os inputs de texto no modo de visualização */
 .modal-body:not(.is-editing) .edit-mode {
     display: none;
 }
 
-/* Esconde os spans no modo de edição */
 .modal-body.is-editing .view-mode {
     display: none;
 }
 
 .modal-body {
-    max-height: calc(100vh - 200px); /* Altura da tela menos o espaço para header, footer e margens */
-    overflow-y: auto; /* Adiciona a barra de rolagem vertical automaticamente */
-    padding-right: 15px; /* Espaço para a barra de rolagem não cobrir o conteúdo */
-}
+    max-height: calc(100vh - 200px); 
+    overflow-y: auto; 
+    padding-right: 15px; 
 
-/* Deixa a seção do checklist mais organizada */
 .detalhes-secao-completa h3 {
     margin-bottom: 15px;
 }
 
-/* Melhora a grade do checklist */
 .checklist-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Cria colunas responsivas */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
     gap: 12px;
 }
 
-/* Melhora a aparência de cada item do checklist */
 .checklist-item {
     display: flex;
     align-items: center;
@@ -302,11 +271,11 @@
 }
 
 #interacao-manual-section {
-    display: none; /* Começa escondida e só aparece no modo de visualização */
+    display: none; 
 }
 
 .modal-body:not(.is-editing) #interacao-manual-section {
-    display: block; /* Mostra a seção apenas quando NÃO está em modo de edição */
+    display: block; 
 }
 
 #interacao-descricao {
@@ -340,7 +309,6 @@
 .btn-interacao:hover {
     opacity: 0.9;
 }
-/* EM: client/css/modal.css */
 
 .error-message {
     margin-top: 15px;
@@ -348,9 +316,9 @@
 }
 
 .error-message.success {
-    color: #48BB78; /* Verde para sucesso */
+    color: #48BB78; 
 }
 
 .error-message.error {
-    color: #E53E3E; /* Vermelho para erro */
+    color: #E53E3E; 
 }
