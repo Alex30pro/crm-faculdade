@@ -1,11 +1,8 @@
-// server/controllers/historicoController.js
-
 const db = require('../db/connection');
 
-// Função para buscar o histórico de um contato específico
 const getHistoricoPorContatoId = async (req, res) => {
     try {
-        const { id } = req.params; // Pega o ID do contato da URL
+        const { id } = req.params; 
 
         const historico = await db('historico_contatos')
             .join('usuarios', 'historico_contatos.usuario_id', '=', 'usuarios.id')
@@ -15,9 +12,9 @@ const getHistoricoPorContatoId = async (req, res) => {
                 'historico_contatos.tipo_acao',
                 'historico_contatos.descricao',
                 'historico_contatos.created_at',
-                'usuarios.nome as nome_usuario' // Pega o nome do usuário que fez a ação
+                'usuarios.nome as nome_usuario' 
             )
-            .orderBy('historico_contatos.created_at', 'desc'); // Ordena do mais recente para o mais antigo
+            .orderBy('historico_contatos.created_at', 'desc'); 
 
         res.json(historico);
     } catch (error) {
