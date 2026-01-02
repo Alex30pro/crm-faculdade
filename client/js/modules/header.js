@@ -1,5 +1,3 @@
-// EM: client/js/modules/header.js (VERSÃO FINAL E CORRIGIDA)
-
 export function renderHeader() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) return;
@@ -7,11 +5,9 @@ export function renderHeader() {
     const mainHeader = document.querySelector('.main-header');
     if (!mainHeader) return;
 
-    // --- LÓGICA DE CONTROLE DE PÁGINA ---
     const currentPage = window.location.pathname.split('/').pop();
     const isDashboardPage = (currentPage === 'dashboard.html' || currentPage === '');
 
-    // --- INJEÇÃO CONDICIONAL DO MODAL E SEUS LISTENERS ---
     if (isDashboardPage) {
         if (!document.getElementById('password-modal')) {
             const modalHtml = `
@@ -79,8 +75,6 @@ export function renderHeader() {
         }
     }
 
-
-    // --- RENDERIZAÇÃO DO HEADER ---
     let adminLinks = '';
     if (user.role.toLowerCase() === 'admin') {
         adminLinks = `
@@ -117,8 +111,6 @@ export function renderHeader() {
         </div>
     `;
 
-    // --- LISTENERS GLOBAIS DO HEADER ---
-    
     const changePasswordLink = document.getElementById('change-password-link');
     if (changePasswordLink) {
         changePasswordLink.addEventListener('click', (e) => {
@@ -136,7 +128,7 @@ export function renderHeader() {
         });
     }
 
-    // <-- CORREÇÃO 2: A variável themeToggleBtn precisa ser declarada aqui
+
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     if (themeToggleBtn) {
         function applyTheme(theme) {
