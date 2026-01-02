@@ -1,6 +1,3 @@
-// client/js/modules/ui.js (VERSÃO CORRIGIDA E MAIS ROBUSTA)
-
-// --- Funções Auxiliares Internas ---
 function limparNumeroParaWhatsApp(numero) {
     if (!numero) return '';
     const numeroLimpo = String(numero).replace(/\D/g, '');
@@ -32,8 +29,6 @@ function formatarData(dataISO) {
 
     return dataUTC.toLocaleString('pt-BR', options);
 }
-
-// --- Funções Exportadas ---
 
 export function renderStatusOptions(statusList, selectElement, defaultText = 'Selecione um status...') {
     if(!selectElement) return;
@@ -101,8 +96,6 @@ export function renderContatosTabela(contatos, tabelaCorpo) {
     });
 }
 
-// --- Funções de Modal (com a correção de timing) ---
-
 function mostrarModalGenerico(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -126,7 +119,6 @@ function esconderModalGenerico(modalId) {
     }
 }
 
-// Histórico
 export const mostrarModal = () => mostrarModalGenerico('history-modal');
 export const esconderModal = () => esconderModalGenerico('history-modal');
 export function renderHistoricoModal(historico, nomeContato) {
@@ -151,11 +143,9 @@ export function renderHistoricoModal(historico, nomeContato) {
     historyModalBody.appendChild(ul);
 }
 
-// Senha
 export const mostrarModalSenha = () => mostrarModalGenerico('password-modal');
 export const esconderModalSenha = () => esconderModalGenerico('password-modal');
 
-// Lembrete
 export const mostrarModalLembrete = (nomeContato) => {
     const title = document.getElementById('lembrete-modal-title');
     if (title) title.textContent = `Agendar Lembrete para ${nomeContato}`;
@@ -163,6 +153,5 @@ export const mostrarModalLembrete = (nomeContato) => {
 };
 export const esconderModalLembrete = () => esconderModalGenerico('lembrete-modal');
 
-// Detalhes
 export const mostrarDetalhesModal = () => mostrarModalGenerico('detalhes-modal');
 export const esconderDetalhesModal = () => esconderModalGenerico('detalhes-modal');
