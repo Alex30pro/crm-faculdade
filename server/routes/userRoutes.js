@@ -1,5 +1,3 @@
-// Arquivo: server/routes/userRoutes.js (VERSÃO FINAL E CORRIGIDA)
-
 const express = require('express');
 const router = express.Router();
 const { getAllUsers, toggleUserStatus, updateUserRole } = require('../controllers/userController');
