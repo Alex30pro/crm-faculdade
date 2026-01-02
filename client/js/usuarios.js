@@ -1,9 +1,8 @@
-// Arquivo: client/js/usuarios.js (VERSÃO FINAL E CENTRALIZADA)
 import * as api from './modules/api.js';
 import { renderHeader } from './modules/header.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderHeader(); // Cabeçalho centralizado é renderizado aqui.
+    renderHeader(); 
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -13,10 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return; 
     }
 
-    // --- SELETORES ---
     const tabelaCorpo = document.querySelector('#users-table tbody');
     
-    // --- ADICIONADO: Seletores para o novo modal ---
     const addUserModal = document.getElementById('add-user-modal');
     const addUserBtn = document.getElementById('add-user-btn');
     const closeModalBtn = document.getElementById('add-user-modal-close-btn');
@@ -38,12 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const statusText = u.is_active ? 'Ativo' : 'Inativo';
                 const toggleActionText = u.is_active ? 'Desativar' : 'Reativar';
 
-                // MELHORIA: O botão só aparece se o usuário NÃO for admin
                 const promoteButton = !isAdmin
                     ? `<button class="btn btn-secondary" data-action="promote">Promover a Admin</button>`
                     : '';
 
-                // MELHORIA: Adicionado data-action para padronizar
                 const toggleButton = `<button class="btn btn-secondary" data-action="toggle-status" ${isCurrentUser ? 'disabled' : ''}>${toggleActionText}</button>`;
 
                 tr.innerHTML = `
@@ -66,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- ADICIONADO: Listeners para controlar o modal de novo usuário ---
     if (addUserBtn) {
         addUserBtn.addEventListener('click', () => {
             addUserForm.reset();
@@ -96,14 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Usuário criado com sucesso!');
                 addUserForm.reset();
                 addUserModal.style.display = 'none';
-                carregarUsuarios(); // Recarrega a lista para mostrar o novo usuário
+                carregarUsuarios();
             } catch (error) {
                 errorMessage.textContent = error.message;
             }
         });
     }
 
-    // MELHORIA: Listener da tabela agora usa data-action
     tabelaCorpo.addEventListener('click', async (event) => {
         const targetButton = event.target.closest('button');
         if (!targetButton) return;
@@ -128,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (action === 'promote') {
             if (confirm('Tem certeza que deseja promover este usuário a Administrador? Ele terá acesso total ao sistema.')) {
                 try {
-                    await api.updateUserRole(userId, 'admin'); // 'admin' em minúsculo
+                    await api.updateUserRole(userId, 'admin'); 
                     carregarUsuarios();
                 } catch (error) {
                     alert(`Erro ao promover usuário: ${error.message}`);
@@ -137,6 +130,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Inicialização
     carregarUsuarios();
 });
