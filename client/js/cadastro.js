@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('error-message');
     const toggleButtons = document.querySelectorAll('.password-toggle-btn');
 
-    // Lógica para mostrar/ocultar senha
     toggleButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const passwordInput = btn.previousElementSibling;
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Lógica do formulário de cadastro
     signupForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         errorMessage.style.display = 'none';
