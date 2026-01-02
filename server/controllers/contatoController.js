@@ -1,14 +1,11 @@
-// server/controllers/contatoController.js (VERSÃO FINAL E CORRIGIDA)
-
 const ExcelJS = require('exceljs');
 const db = require('../db/connection');
 
 const getAllContatos = async (req, res) => {
      try {
-        // 1. Pega os parâmetros da URL (ex: /api/contatos?status=1&search=Alex)
+
         const { status, polo, responsavel, search } = req.query;
 
-        // 2. A base da nossa consulta, já fazendo os JOINS para pegar os nomes
         const query = db('contatos')
             .select(
                 'contatos.*',
@@ -18,10 +15,9 @@ const getAllContatos = async (req, res) => {
             )
             .leftJoin('status', 'contatos.status_id', 'status.id')
             .leftJoin('polos', 'contatos.polo_id', 'polos.id')
-            .where('contatos.deletado_em', null) // Garante que não estamos pegando contatos da lixeira
+            .where('contatos.deletado_em', null) 
             .orderBy('contatos.created_at', 'desc');
 
-        // 3. Adiciona os filtros dinamicamente, SE eles existirem
         if (status) {
             query.where('contatos.status_id', status);
         }
@@ -29,11 +25,9 @@ const getAllContatos = async (req, res) => {
             query.where('contatos.polo_id', polo);
         }
         if (responsavel) {
-            // Assumindo que a coluna se chama 'criado_por'
             query.where('contatos.criado_por', responsavel);
         }
 
-        // 4. Adiciona a lógica de BUSCA, SE o termo de busca existir
         if (search) {
             query.where(builder => {
                 builder.where('contatos.nome', 'like', `%${search}%`)
@@ -42,7 +36,6 @@ const getAllContatos = async (req, res) => {
             });
         }
 
-        // 5. Executa a consulta finalmente montada
         const contatos = await query;
         res.json(contatos);
 
@@ -53,16 +46,14 @@ const getAllContatos = async (req, res) => {
 };
 
 const createContato = async (req, res) => {
-    // 1. Pega o ID do usuário do TOKEN (a forma correta e segura)
+
     const criado_por = req.user.id; 
     
-    // 2. Pega os dados do contato do corpo da requisição
     const { 
         nome, email, telefone, status_id, polo_id, 
         curso_interesse, canal_aquisicao 
     } = req.body;
 
-    // 3. Validação robusta (agora verifica os campos certos)
     if (!nome || !polo_id || !status_id) {
         return res.status(400).json({ message: 'Nome, Polo e Status são campos obrigatórios.' });
     }
@@ -76,13 +67,11 @@ const createContato = async (req, res) => {
             polo_id,
             curso_interesse,
             canal_aquisicao,
-            criado_por // 4. Salva o ID do usuário que criou o contato
+            criado_por 
         };
 
-        // Insere o contato e pega o ID do novo registro
         const [id] = await db('contatos').insert(novoContatoData);
 
-        // Insere o registro de criação no histórico, usando o ID do token
         await db('historico_contatos').insert({
             contato_id: id,
             usuario_id: criado_por, 
@@ -110,7 +99,6 @@ const updateContato = async (req, res) => {
                 throw new Error('Contato não encontrado.');
             }
 
-            // LÓGICA DO LEMBRETE AUTOMÁTICO (mantida)
             if (dadosRecebidos.status_id && dadosRecebidos.status_id != contatoAtual.status_id) {
                 const novoStatus = await trx('status').where({ id: dadosRecebidos.status_id }).first();
                 if (novoStatus && ['Matriculado', 'Desistiu'].includes(novoStatus.nome_status) && contatoAtual.lembrete_ativo) {
@@ -126,20 +114,17 @@ const updateContato = async (req, res) => {
                 }
             }
 
-            // --- A GRANDE MUDANÇA ESTÁ AQUI ---
-            // LÓGICA DE HISTÓRICO QUE IGNORA MUDANÇAS DE null PARA ""
             const mudancas = [];
             
-            // Função auxiliar para normalizar valores (tratar null e undefined como string vazia)
             const normalizar = (valor) => valor || '';
 
             const camposParaVerificar = ['nome', 'email', 'telefone', 'cpf', 'rg', 'data_nascimento', 'endereco_cep', 'endereco_rua', 'endereco_numero', 'endereco_bairro', 'endereco_cidade', 'endereco_estado', 'curso_interesse', 'canal_aquisicao'];
             
             camposParaVerificar.forEach(campo => {
                 if (dadosRecebidos.hasOwnProperty(campo)) {
-                    // Compara os valores "normalizados"
+
                     if (normalizar(contatoAtual[campo]) !== normalizar(dadosRecebidos[campo])) {
-                        const nomeCampo = campo.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()); // Deixa o nome bonito
+                        const nomeCampo = campo.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()); 
                         mudancas.push(`${nomeCampo} alterado para "${dadosRecebidos[campo]}".`);
                     }
                 }
@@ -156,11 +141,9 @@ const updateContato = async (req, res) => {
                 if(novoPolo) mudancas.push(`Polo alterado de "${poloAtual ? poloAtual.nome_polo : 'N/A'}" para "${novoPolo.nome_polo}".`);
             }
 
-            // ATUALIZAÇÃO FINAL DO CONTATO
             dadosRecebidos.updated_at = db.fn.now();
             await trx('contatos').where({ id }).update(dadosRecebidos);
 
-            // SALVA O HISTÓRICO APENAS SE HOUVE MUDANÇAS REAIS
             if (mudancas.length > 0) {
                 await trx('historico_contatos').insert({
                     contato_id: id,
@@ -179,7 +162,6 @@ const updateContato = async (req, res) => {
     }
 };
 
-// Esta função realiza o SOFT DELETE (move para a lixeira)
 const deleteContato = async (req, res) => {
     const { id } = req.params;
     const usuarioId = req.user.id;
@@ -289,15 +271,13 @@ const agendarLembrete = async (req, res) => {
         const updatedCount = await db('contatos').where({ id }).update({
             lembrete_data: dataLembrete,
             lembrete_ativo: true,
-            lembrete_descricao: lembreteDescricao || '' // Garante que não seja nulo
+            lembrete_descricao: lembreteDescricao || '' 
         });
 
-        // Adiciona uma verificação para saber se o contato foi encontrado
         if (updatedCount === 0) {
             return res.status(404).json({ message: 'Contato não encontrado para agendar lembrete.' });
         }
         
-        // Retorna apenas uma mensagem de sucesso
         res.status(200).json({ message: 'Lembrete agendado com sucesso!' });
 
     } catch (error) {
@@ -316,7 +296,7 @@ const removerLembrete = async (req, res) => {
 
         const contatosAtualizados = await db('contatos')
             .join('status', 'contatos.status_id', '=', 'status.id')
-            .select('contatos.*', 'status.nome_status as status', 'status.cor_hex as status_cor') // <-- CORREÇÃO APLICADA AQUI
+            .select('contatos.*', 'status.nome_status as status', 'status.cor_hex as status_cor') 
             .whereNull('contatos.deletado_em');
             
         res.status(200).json(contatosAtualizados);
@@ -339,7 +319,7 @@ const getContatoById = async (req, res) => {
                 'polos.nome_polo as nome_polo'
             )
             .where('contatos.id', id)
-            .first(); // .first() para pegar apenas um resultado
+            .first(); 
 
         if (contato) {
             res.json(contato);
@@ -365,13 +345,11 @@ const permanentDeleteContato = async (req, res) => {
   }
 };
 
-// --- NOVA FUNÇÃO PARA REGISTRAR INTERAÇÃO MANUAL ---
 const registrarInteracaoManual = async (req, res) => {
-    const { id: contato_id } = req.params; // Pega o ID do contato da URL
-    const { descricao, tipo_acao } = req.body; // Pega os dados enviados pelo front-end
-    const usuario_id = req.user.id; // Pega o ID do usuário logado a partir do token
+    const { id: contato_id } = req.params; 
+    const { descricao, tipo_acao } = req.body; 
+    const usuario_id = req.user.id; 
 
-    // Validação simples
     if (!descricao || !tipo_acao) {
         return res.status(400).json({ message: 'A descrição e o tipo da ação são obrigatórios.' });
     }
@@ -381,10 +359,9 @@ const registrarInteracaoManual = async (req, res) => {
             contato_id,
             usuario_id,
             descricao,
-            tipo_acao // Ex: "Ligação", "E-mail", "Anotação"
+            tipo_acao 
         });
 
-        // Retorna o histórico atualizado para o front-end poder redesenhar a lista
         const historicoAtualizado = await db('historico_contatos')
             .join('usuarios', 'historico_contatos.usuario_id', 'usuarios.id')
             .select('historico_contatos.*', 'usuarios.nome as nome_usuario')
@@ -401,11 +378,9 @@ const registrarInteracaoManual = async (req, res) => {
 
 const exportarParaXLSX = async (req, res) => {
     try {
-        // 1. Lógica de busca e filtros (AGORA COMPLETA E CORRIGIDA)
+
         const { status, polo, responsavel, search } = req.query;
 
-        // AQUI ESTAVA O PROBLEMA: A consulta ao banco precisa ser completa,
-        // com todos os selects e joins que você já usava.
         const query = db('contatos')
             .select(
                 'contatos.nome',
@@ -415,15 +390,14 @@ const exportarParaXLSX = async (req, res) => {
                 'polos.nome_polo',
                 'contatos.curso_interesse',
                 'contatos.canal_aquisicao',
-                'usuarios.nome as criado_por' // Busca o nome do usuário que criou
+                'usuarios.nome as criado_por' 
             )
             .leftJoin('status', 'contatos.status_id', 'status.id')
             .leftJoin('polos', 'contatos.polo_id', 'polos.id')
-            .leftJoin('usuarios', 'contatos.criado_por', 'usuarios.id') // Faz o JOIN com a tabela de usuários
+            .leftJoin('usuarios', 'contatos.criado_por', 'usuarios.id') 
             .where('contatos.deletado_em', null)
             .orderBy('contatos.created_at', 'desc');
 
-        // Lógica de filtros (não precisa mudar, já estava correta)
         if (status) query.where('contatos.status_id', status);
         if (polo) query.where('contatos.polo_id', polo);
         if (responsavel) query.where('contatos.criado_por', responsavel);
@@ -438,11 +412,9 @@ const exportarParaXLSX = async (req, res) => {
 
         const contatos = await query;
 
-        // 2. Criar a planilha com ExcelJS (não precisa mudar)
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Relatório de Contatos');
 
-        // 3. Definir o cabeçalho e o estilo (não precisa mudar)
         worksheet.columns = [
             { header: 'Nome do Aluno', key: 'nome', width: 35 },
             { header: 'E-mail', key: 'email', width: 35 },
@@ -454,7 +426,6 @@ const exportarParaXLSX = async (req, res) => {
             { header: 'Responsável', key: 'criado_por', width: 20 }
         ];
 
-        // Estilo do cabeçalho (não precisa mudar)
         const headerRow = worksheet.getRow(1);
         headerRow.eachCell((cell) => {
             cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF4F46E5' } };
@@ -463,14 +434,11 @@ const exportarParaXLSX = async (req, res) => {
             cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
         });
         
-        // 4. Adicionar os dados (não precisa mudar)
         worksheet.addRows(contatos);
 
-        // 5. Configurar a resposta do servidor (não precisa mudar)
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         res.setHeader('Content-Disposition', 'attachment; filename="relatorio_contatos.xlsx"');
 
-        // 6. Enviar a planilha para o navegador (não precisa mudar)
         await workbook.xlsx.write(res);
         res.end();
 
