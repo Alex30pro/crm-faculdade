@@ -4,7 +4,7 @@ exports.up = function(knex) {
     table.string('nome_polo').notNullable();
   })
   .then(function () {
-    // Insere os polos iniciais
+
     return knex('polos').insert([
       { nome_polo: 'Ponta Grossa' },
       { nome_polo: 'Castro' },
