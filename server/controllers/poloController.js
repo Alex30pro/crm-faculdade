@@ -1,5 +1,3 @@
-// Arquivo: server/controllers/poloController.js
-
 const db = require('../db/connection');
 
 const getAllPolos = async (req, res) => {
