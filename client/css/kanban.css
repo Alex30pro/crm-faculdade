@@ -1,9 +1,7 @@
-/* client/css/kanban.css */
-
 .container-kanban {
     width: 100%;
     padding: 20px;
-    height: calc(100vh - 80px); /* Altura da tela menos o cabeçalho */
+    height: calc(100vh - 80px); 
     display: flex;
 }
 
@@ -11,12 +9,12 @@
     display: flex;
     gap: 20px;
     width: 100%;
-    overflow-x: auto; /* Permite rolar o quadro horizontalmente */
-    padding-bottom: 15px; /* Espaço para a barra de rolagem não cobrir o conteúdo */
+    overflow-x: auto; 
+    padding-bottom: 15px; 
 }
 
 .kanban-column {
-    flex: 0 0 300px; /* Faz com que cada coluna tenha 300px de largura e não encolha */
+    flex: 0 0 300px; 
     background-color: var(--fundo-secundario, #2a2f3a);
     border-radius: 8px;
     display: flex;
@@ -41,9 +39,9 @@
 
 .kanban-column-content {
     padding: 10px;
-    flex-grow: 1; /* Faz esta área ocupar todo o espaço vertical disponível */
-    overflow-y: auto; /* Adiciona rolagem se a coluna ficar muito cheia */
-    min-height: 100px; /* Altura mínima para a área de "arrastar e soltar" funcionar bem */
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 100px;
 }
 
 .kanban-card {
@@ -73,7 +71,6 @@
     gap: 4px;
 }
 
-/* Classe adicionada pela biblioteca SortableJS enquanto um card é arrastado */
 .sortable-ghost {
     opacity: 0.4;
     background-color: #555;
