@@ -1,11 +1,10 @@
 exports.up = function(knex) {
   return knex.schema.table('contatos', function(table) {
-    // Documentos
+
     table.string('cpf');
     table.string('rg');
     table.date('data_nascimento');
 
-    // Endereço
     table.string('endereco_cep');
     table.string('endereco_rua');
     table.string('endereco_numero');
