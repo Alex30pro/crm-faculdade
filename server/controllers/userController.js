@@ -1,10 +1,8 @@
-// Arquivo: server/controllers/userController.js
 const db = require('../db/connection');
 
-// Função para listar todos os usuários (para o admin)
 const getAllUsers = async (req, res) => {
     try {
-        // Seleciona todos os campos, exceto a senha
+
         const users = await db('usuarios').select('id', 'nome', 'email', 'role', 'is_active').orderBy('nome');
         res.json(users);
     } catch (error) {
@@ -12,11 +10,9 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-// Função para desativar ou reativar um usuário
 const toggleUserStatus = async (req, res) => {
     const { id } = req.params;
-    const { is_active } = req.body; // Recebe o novo status (true ou false)
-
+    const { is_active } = req.body; 
     try {
         await db('usuarios').where({ id }).update({ is_active });
         res.json({ message: 'Status do usuário atualizado com sucesso.' });
@@ -29,7 +25,6 @@ const updateUserRole = async (req, res) => {
     const { id } = req.params;
     const { role } = req.body;
 
-    // Trava de segurança: impede que um admin se rebaixe se for o último
     if (role !== 'admin') {
         const adminCount = await db('usuarios').where({ role: 'admin', is_active: true }).count('id as count').first();
         const targetUser = await db('usuarios').where({ id }).first();
