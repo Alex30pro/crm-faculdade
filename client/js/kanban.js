@@ -1,12 +1,9 @@
-// client/js/kanban.js
-
 import * as api from './modules/api.js';
 import { renderHeader } from './modules/header.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderHeader(); // Perfeito! O cabeçalho é a primeira coisa a ser renderizada.
+    renderHeader(); 
 
-    // --- LÓGICA DE AUTENTICAÇÃO E SEGURANÇA ---
     const authToken = localStorage.getItem('authToken');
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -15,10 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- SELETORES E VARIÁVEIS ---
     const kanbanBoard = document.getElementById('kanban-board');
 
-    // --- FUNÇÃO PRINCIPAL PARA INICIALIZAR O KANBAN ---
     async function inicializarKanban() {
         if (!kanbanBoard) return;
         kanbanBoard.innerHTML = '<p>Carregando quadro...</p>';
@@ -31,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             kanbanBoard.innerHTML = '';
 
-            // Renderiza as colunas
             statusList.forEach(status => {
                 const column = document.createElement('div');
                 column.className = 'kanban-column';
@@ -47,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 kanbanBoard.appendChild(column);
             });
 
-            // Renderiza os cartões
             contatos.forEach(contato => {
                 const card = document.createElement('div');
                 card.className = 'kanban-card';
@@ -69,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             updateCardCounts();
 
-            // Ativa o "arrastar e soltar"
             const columnsContent = document.querySelectorAll('.kanban-column-content');
             columnsContent.forEach(column => {
                 new Sortable(column, {
@@ -86,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- FUNÇÕES AUXILIARES ---
     async function handleCardMove(event) {
         const contatoId = event.item.dataset.contactId;
         const novoStatusId = event.to.parentElement.dataset.statusId;
